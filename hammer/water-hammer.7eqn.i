@@ -53,8 +53,8 @@
     length = 10.
     f = 0.
     f_interface = 0
-    Hw_liquid = 20000.0
-    Hw_vapor = 20000.0
+    Hw_liquid = 0.0
+    Hw_vapor = 0.0
     Phf = 0.0489623493599166
     Tw = 550
     n_elems = 500

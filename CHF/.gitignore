@@ -1,1 +1,5 @@
 /INLUpdate_Out
+*.csv
+*.e
+input_summary.txt
+input_summary2.txt

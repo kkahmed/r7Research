@@ -1,6 +1,6 @@
 [GlobalParams]
   initial_p = 1.0e5
-  initial_v = 0.007
+  initial_v = 0.5
   initial_T = 950
 
   stabilization_type = 'NONE'
@@ -91,7 +91,7 @@
 
     dim_hs = 1
     name_of_hs = 'fuel clad'
-    initial_Ts = 677
+    initial_Ts = 1000
     n_heatstruct = 2
     fuel_type = cylinder
     width_of_hs = '0.00348  0.00052'
@@ -152,7 +152,7 @@
     f = 0.08215
     f_secondary = 0.045
 
-    initial_Twall = 950
+    initial_Twall = 900
     wall_thickness = 0.0044
 
     dim_wall = 1

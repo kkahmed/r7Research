@@ -1,7 +1,7 @@
 [GlobalParams]
   initial_p = 1.0e5
-  initial_v = 0.5
-  initial_T = 950
+  initial_v = 0.12
+  initial_T = 900
 
   stabilization_type = 'NONE'
 []
@@ -69,7 +69,7 @@
     Dh = 0.14
     length = 1
     n_elems = 5
-    f = 0.025
+    f = 0.0298
     Hw = 0.0
   [../]
 
@@ -84,7 +84,8 @@
     length = 2.5
     n_elems = 25 #20
 
-    f = 0.346 #Darcy
+    f = 0.385 #Swamee-Jain
+    #f = 0.346  #Darcy
     Hw = 1.6129e5 #liquid metal still
     # aw = 1107.8
     Phf = 33.6955
@@ -112,7 +113,7 @@
     Dh = 0.14
     length = 5
     n_elems = 5
-    f = 0.025
+    f = 0.0298
     Hw = 0.0
   [../]
 
@@ -126,7 +127,7 @@
     Dh = 0.14
     length = 1
     n_elems = 5
-    f = 0.025
+    f = 0.0298
     Hw = 0.0
   [../]
 
@@ -149,10 +150,11 @@
     # aw_secondary = 729
     Phf = 89.6
     Phf_secondary = 89.6
-    f = 0.08215
+    #f = 0.238
+    f = 0.0915
     f_secondary = 0.045
 
-    initial_Twall = 900
+    initial_Twall = 800
     wall_thickness = 0.0044
 
     dim_wall = 1
@@ -170,7 +172,7 @@
     Dh = 0.14
     length = 5
     n_elems = 5
-    f = 0.025
+    f = 0.0298
     Hw = 0.0
   [../]
 
@@ -301,11 +303,11 @@
   scheme = 'implicit-euler'
 
   dt = 1e-2
-  dtmin = 1e-10
+  dtmin = 1e-8
 
-  # setting time step range
-  #  time_t = '0    0.1    0.11  1.0    1.05  2    2.1  5    1e5'
-  #  time_dt ='1.e-2  1.e-2 5e-2  5.e-2  1e-1  1e-1 0.5 1     1.'
+ #  setting time step range
+ #   time_t = '0    0.1    0.11  1.0    1.05  2    2.1  5    1e5'
+ #   time_dt ='1.e-2  1.e-2 5e-2  5.e-2  1e-1  1e-1 0.5 1     1.'
 
   petsc_options_iname = '-ksp_gmres_restart'
   petsc_options_value = '300'
@@ -319,7 +321,7 @@
 
   start_time = 0.0
   num_steps = 1500 #for the establishment of long-term natural circulation
-  end_time = 4.0
+  end_time = 3.5
 
 
    [./Quadrature]

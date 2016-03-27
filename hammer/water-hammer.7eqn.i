@@ -1,13 +1,13 @@
 [GlobalParams]
   gravity = '0 0 0'
 
-  initial_T_liquid = 558.980022806 #K
-  initial_T_vapor  = 558.980022806
+  initial_T_liquid = 550 #K
+  initial_T_vapor  = 550
   initial_p_liquid = 7.0e6 		#Pa
   initial_p_vapor  = 7.0e6
-  initial_v_liquid = 12.5 		#m/s
-  initial_v_vapor  = 12.5
-  initial_volume_fraction_vapor = 0.01
+  initial_v_liquid = 7.672 		#m/s
+  initial_v_vapor  = 7.672		#Based on 3m drop height 
+  initial_volume_fraction_vapor = 0.000001
 
   scaling_factor_2phase = '1e4
                            1e1 1e-1 1e-5
@@ -48,14 +48,14 @@
     # geometry
     position = '0 0 0'
     orientation = '1 0 0'
-    A = 1.907720E-04 		#1.90772 cm2
+    A = 2.265973E-04 		#2.265973 cm2 flow area
     Dh = 1.698566E-02		#1.698566 cm hydraulic diameter
     length = 10. 			#m
     f = 0.
     f_interface = 0
     Hw_liquid = 0.0
     Hw_vapor = 0.0
-    Phf = 0.0489623493599166  #Heat flux perimeter 
+    Phf = 0.0  			#Heat flux perimeter 
     Tw = 550				#Initial pipe wall temp
     n_elems = 500
   [../]
@@ -170,7 +170,7 @@
   l_max_its = 30
 
   start_time = 0.0
-  end_time = .03
+  end_time = .1
 
   [./Quadrature]
     type = TRAP

@@ -1,13 +1,13 @@
 [GlobalParams]
   gravity = '0 0 0'
 
-  initial_T_liquid = 558 #K
-  initial_T_vapor  = 558
+  initial_T_liquid = 558.980022806 #K
+  initial_T_vapor  = 558.980022806
   initial_p_liquid = 7.0e6 		#Pa
   initial_p_vapor  = 7.0e6
   initial_v_liquid = 7.672 		#m/s
   initial_v_vapor  = 7.672		#Based on 3m drop height 
-  initial_volume_fraction_vapor = 0.000001
+  initial_volume_fraction_vapor = 0.01
 
   scaling_factor_2phase = '1e4
                            1e1 1e-1 1e-5
@@ -31,8 +31,10 @@
   stabilization_entropy_viscosity_Cjump_vapor = 4.
   stabilization_entropy_viscosity_Cjump_vf = 4.
 
-  specific_interfacial_area_max_value = 180.
+  specific_interfacial_area_max_value = 1800.
   explicit_acoustic_impedance = true
+
+  
 []
 
 [FluidProperties]
@@ -50,14 +52,14 @@
     orientation = '1 0 0'
     A = 2.265973E-04 		#2.265973 cm2 flow area
     Dh = 1.698566E-02		#1.698566 cm hydraulic diameter
-    length = 10. 			#m
+    length = 3			#m
     f = 0.
     f_interface = 0
     Hw_liquid = 0.0
     Hw_vapor = 0.0
     Phf = 0.0  			#Heat flux perimeter 
-    Tw = 558				#Initial pipe wall temp
-    n_elems = 500
+    Tw = 558.980022806			#Initial pipe wall temp
+    n_elems = 200
   [../]
 
   [./inlet]
@@ -101,6 +103,11 @@
     family = MONOMIAL
     order = CONSTANT
   [../]
+
+  [./tsat_aux]
+    family = MONOMIAL
+    order = CONSTANT
+  [../]
 []
 
 [AuxKernels]
@@ -139,6 +146,13 @@
     variable = beta_max_aux
     property = evm:beta_max
   [../]
+
+  [./tsat_ak]
+    type = TemperatureSaturationAux
+    variable = tsat_aux
+    pressure = pressure_liquid
+    fp = eos
+  [../]
 []
 
 [Preconditioning]
@@ -159,7 +173,7 @@
   [./TimeStepper]
     type = FunctionDT
     time_t = '0            1.e-4     .03 	'
-    time_dt ='1.e-5        5.e-5     5.e-5 	'
+    time_dt ='1.e-6        1.e-5     1.e-5 	'
   [../]
 
   nl_rel_tol = 1e-7
@@ -170,7 +184,7 @@
   l_max_its = 30
 
   start_time = 0.0
-  end_time = .1
+  end_time = 0.1
 
   [./Quadrature]
     type = TRAP

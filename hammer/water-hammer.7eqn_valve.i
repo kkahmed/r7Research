@@ -37,15 +37,23 @@
 
 [FluidProperties]
   [./eos]
-    type = IAPWS957EqnFluidProperties
+    type = StiffenedGas7EqnFluidProperties
   [../]
-  [./liquid_eos]
-    type = StiffenedGasFluidProperties
-    gamma = 2.35
-    q = -1167e3
-    q_prime = 0
-    p_inf = 1.e9
-    cv = 1816
+  #[./liquid_eos]
+  #  type = StiffenedGasFluidProperties
+  #  gamma = 2.35
+  #  q = -1167e3
+  #  q_prime = 0
+  #  p_inf = 1.e9
+  #  cv = 1816
+  #[../]
+[]
+
+[Functions]
+  [./a_func]
+    type = PiecewiseLinear 
+    x = '0			1			1.01		1.1'
+    y = '2.265973E-04	2.265973E-04	0		0'	
   [../]
 []
 
@@ -54,7 +62,7 @@
     type = Pipe
     fp = eos
     # geometry
-    position = '0.6 0 0'
+    position = '0.5 0 0'
     orientation = '1 0 0'
     A = 2.265973E-04 		#2.265973 cm2 flow area
     Dh = 1.698566E-02		#1.698566 cm hydraulic diameter
@@ -67,6 +75,7 @@
     Tw = 558				#Initial pipe wall temp
     n_elems = 500
   [../]
+
   [./pipe_in]
     type = Pipe
     fp = eos
@@ -82,13 +91,13 @@
     Hw_vapor = 0.0
     Phf = 0.0  			#Heat flux perimeter 
     Tw = 558				#Initial pipe wall temp
-    n_elems = 500
+    n_elems = 10
   [../]
   [./pipe_out]
     type = Pipe
     fp = eos
     # geometry
-    position = '10.7 0 0'
+    position = '10.5 0 0'
     orientation = '1 0 0'
     A = 2.265973E-04 		#2.265973 cm2 flow area
     Dh = 1.698566E-02		#1.698566 cm hydraulic diameter
@@ -99,8 +108,9 @@
     Hw_vapor = 0.0
     Phf = 0.0  			#Heat flux perimeter 
     Tw = 558				#Initial pipe wall temp
-    n_elems = 500
+    n_elems = 10
   [../]
+
 
   #[./inlet]
   #  type = SolidWall
@@ -114,53 +124,37 @@
 
 #Boundary components
   [./inlet]
-    type = TimeDependentJunction
-    input = 'pipe_in(in)'
-    v = 7.672
-    T = 558
+    type = Inlet
+    input = 'pipe(in)'
+    p_liquid = 7.0e6
+    T_liquid = 558
+    p_vapor = 7.0e6
+    T_vapor = 558
+    #u_liquid = 7.672
+    #u_liquid = 7.672
+    volume_fraction_vapor = 0.000000
   [../]
   [./outlet]
-    type = TimeDependentVolume
-    input = 'pipe_out(out)'
-    p = '6.9e6'
-    T = 558
+    type = Outlet
+    input = 'pipe(out)'
+    p_liquid = 7.0e6
+    p_vapor = 7.0e6
   [../]
-  [./valve1]
-    type = Valve
-    fp = liquid_eos
-    center = '0.55 0.0 0.0'
-    inputs = 'pipe_in(out)'
-    outputs = 'pipe(in)'
-    K = '0.0 0.0'
-    volume = 2.265973E-05
-    A_ref = 2.265973E-04
-    initial_T = 558.0
-    #initial_p = 7.0e6
-    #initial_v = 7.762
-    #initial_volume_fraction_vapor = 1.0e-6
-    initial_status = open
-    trigger_time = 1.0
-    response_time = 0.01
-    scale_factors = '1.0E-4 1.0E-8' # rho, rhoE
-  [../]
-  [./valve2]
-    type = Valve
-    fp = liquid_eos
-    center = '10.65 0.0 0.0'
-    inputs = 'pipe(out)'
-    outputs = 'pipe_out(in)'
-    K = '0.0 0.0'
-    volume = 2.265973E-05
-    A_ref = 2.265973E-04
-    initial_T = 558.0
-    #initial_p = 7.0e6
-    #initial_v = 7.762
-    #initial_volume_fraction_vapor = 1.0e-6
-    initial_status = open
-    trigger_time = 1.0
-    response_time = 0.01
-    scale_factors = '1.0E-4 1.0E-8' # rho, rhoE
-  [../]
+
+  #[./Branch1]
+  #  type = Branch
+  #  inputs = 'pipe_in(out)'
+  #  outputs = 'pipe(in)'
+  #  K = '0.0 0.0'
+  #  A_ref = 2.265973E-04
+  #[../]
+  #[./Branch2]
+  #  type = Branch
+  #  inputs = 'pipe(out)'
+  #  outputs = 'pipe_out(in)'
+  #  K = '0.0 0.0'
+  #  A_ref = 2.265973E-04
+  #[../]
 []
 
 [AuxVariables]
@@ -250,8 +244,8 @@
 
   [./TimeStepper]
     type = FunctionDT
-    time_t = '0 		0.99		1.0001     .03 	'
-    time_dt ='1.e-2 	1.e-5     5.e-5     5.e-5 	'
+    time_t = '0 		0.98		0.99		1.01     .03 		0.1'
+    time_dt ='1.e-2 	1.e-2	1.e-5     1.e-5     5.e-5 	5.e-5'
   [../]
 
   nl_rel_tol = 1e-7

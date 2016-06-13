@@ -1,13 +1,13 @@
 [GlobalParams]
   initial_p = 1.0e5
-  initial_v = 0.12
-  initial_T = 900
+  initial_v = 0.1285049
+  initial_T = 950
 
-  scaling_factor_1phase = '1e4 1e1 1e-2'
-  scaling_factor_temperature = 1e-2
-  stabilization_type = 'LAPIDUS'
+  #scaling_factor_1phase = '1e4 1e1 1e-2'
+  #scaling_factor_temperature = 1e-2
+  #stabilization_type = 'LAPIDUS'
 
-  #stabilization_type = 'NONE'
+  stabilization_type = 'NONE'
 []
 
 [FluidProperties]
@@ -69,11 +69,11 @@
     position = '0 1 0'
     orientation = '0 -1 0'
 
-    A = 0.015394
-    Dh = 0.14
+    A = 0.01767146
+    Dh = 0.15
     length = 1
     n_elems = 5
-    f = 0.0298
+    f = 0.03903
     Hw = 0.0
   [../]
 
@@ -83,16 +83,17 @@
     position = '0 0 0'
     orientation = '0 0 1'
 
-    A = 0.0918
+    A = 0.09182015
     Dh = 0.0109
     length = 2.5
     n_elems = 25 #20
 
-    f = 0.385 #Swamee-Jain
+    f = 1.00156 
     #f = 0.346  #Darcy
     Hw = 1.6129e5 #liquid metal still
     # aw = 1107.8
     Phf = 33.6955
+    initial_v = 0.0247317
 
     dim_hs = 1
     name_of_hs = 'fuel clad'
@@ -113,11 +114,11 @@
     position = '0 0 2.5'
     orientation = '0 0 1'
 
-    A = 0.015394
-    Dh = 0.14
+    A = 0.01767146
+    Dh = 0.15
     length = 5
     n_elems = 5
-    f = 0.0298
+    f = 0.03903
     Hw = 0.0
   [../]
 
@@ -127,39 +128,41 @@
     position = '0 0 7.5'
     orientation = '0 1 0'
 
-    A = 0.015394
-    Dh = 0.14
+    A = 0.01767146
+    Dh = 0.15
     length = 1
     n_elems = 5
-    f = 0.0298
+    f = 0.03903
     Hw = 0.0
   [../]
 
   [./IHX]
     type = HeatExchanger
+    hs_type = cylinder
     fp = eos
     fp_secondary = eos2
-    position = '0 1.0 7.5'
+    position = '0 1.1 7.5'
     orientation = '0 0 -1'
-    A = 0.0218
-    A_secondary = 0.1913
+    A = 0.0218353
+    A_secondary = 0.18391
     Dh = 0.0109
-    Dh_secondary = 0.0109
-    length = 2.5
-    n_elems = 10
+    Dh_secondary = 0.0129
+    length = 24
+    n_elems = 48
 
     Hw = 1.6129e5 # the same as the core
-    Hw_secondary = 1.6129e5 #the same as the core
-    # aw = 729
-    # aw_secondary = 729
-    Phf = 89.6
-    Phf_secondary = 89.6
-    #f = 0.238
-    f = 0.0915
+    Hw_secondary = 22.6 #the same as the core
+    #aw = 192.312
+    #aw_secondary = 192.312
+    Phf = 8.013
+    Phf_secondary = 9.483275
+    f = 0.238
+    #f = 0.0915
     f_secondary = 0.045
+    initial_v = 0.104
 
     initial_Twall = 800
-    wall_thickness = 0.0044
+    wall_thickness = 0.001
 
     dim_wall = 1
     material_wall = wall-mat
@@ -172,11 +175,11 @@
     position = '0 1.0 5'
     orientation = '0 0 -1'
 
-    A = 0.015394
-    Dh = 0.14
+    A = 0.01767146
+    Dh = 0.15
     length = 5
     n_elems = 5
-    f = 0.0298
+    f = 0.03903
     Hw = 0.0
   [../]
 
@@ -185,12 +188,13 @@
     fp = eos
     position = '0 0 7.5'
     orientation = '0 0 1'
+    #initial_v = 0
 
-    A =  0.015394
-    Dh = 0.14
+    A =  0.01767146
+    Dh = 0.15
     length = 0.02
     n_elems = 2
-    f = 10
+    f = 390
     Hw = 0.0
   [../]
 
@@ -199,16 +203,18 @@
     type = Branch
     inputs = 'pipe1(out)'
     outputs = 'CH1(in) '
-    K = '0.5 0.5'
-    A_ref = 0.015394
+    #K = '0.5 0.5'
+    K = '0.0 0.0'
+    A_ref = 0.01767146
   [../]
 
   [./Branch2]
     type = Branch
     inputs = 'CH1(out) '
     outputs = 'pipe2(in)'
-    K = '0.5 0.5'
-    A_ref =  0.015394
+    #K = '0.5 0.5'
+    K = '0.0 0.0'
+    A_ref =  0.01767146
   [../]
 
 
@@ -217,15 +223,16 @@
     inputs = 'pipe2(out)'
     outputs = 'pipe3(in) pipe5(in)'
     K = '0.0 0.0 0.0'
-    A_ref =   0.015394
+    A_ref =   0.01767146
   [../]
 
   [./Branch4]
     type = Branch
     inputs = 'pipe3(out)'
     outputs = 'IHX(primary_in)'
-    K = '0.1 0.1'
-    A_ref = 0.015394
+    #K = '0.1 0.1'
+    K = '0.0 0.0'
+    A_ref = 0.01767146
   [../]
 
   [./Branch5]
@@ -233,7 +240,7 @@
     inputs = 'IHX(primary_out)'
     outputs = 'pipe4(in)'
     K = '0.0 0.0'
-    A_ref = 0.015394
+    A_ref = 0.01767146
   [../]
 
   [./Branch6]
@@ -241,7 +248,7 @@
     inputs = 'pipe4(out)'
     outputs = 'pipe1(in)'
     K = '0.0 0.0'
-    A_ref = 0.015394
+    A_ref = 0.01767146
   [../]
 
 #Boundary components
@@ -251,8 +258,8 @@
     position = '0 1.5 2.27'
     orientation = '0 -1 0'
 
-    A = 0.015394
-    Dh = 0.14
+    A = 0.01767146
+    Dh = 0.15
     length = 0.3
     n_elems = 5
     f = 0.001
@@ -264,7 +271,7 @@
     inputs = 'pipe6(out)'
     outputs = 'IHX(secondary_in)'
     K = '0.0 0.0'
-    A_ref = 0.015394
+    A_ref = 0.01767146
   [../]
 
   [./inlet_TDJ]
@@ -324,8 +331,8 @@
   l_max_its = 300 # Number of linear iterations for each Krylov solve
 
   start_time = 0.0
-  num_steps = 1500 #for the establishment of long-term natural circulation
-  end_time = 3.5
+  num_steps = 15000 #for the establishment of long-term natural circulation
+  end_time = 200
 
 
    [./Quadrature]
@@ -339,10 +346,14 @@
 [Outputs]
   # postprocessor_csv = true
   # num_checkpoint_files = 1
-  xda = true
+  # xda = true
   [./out_displaced]
     type = Exodus
     use_displaced = true
     sequence = false
+  [../]
+  [./console]
+    type = Console
+    perf_log = true
   [../]
 []

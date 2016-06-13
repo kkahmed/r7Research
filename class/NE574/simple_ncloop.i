@@ -1,6 +1,6 @@
 [GlobalParams]
   initial_p = 1.0e5
-  initial_v = 0.5
+  initial_v = 0.0
   initial_T = 628.15
 
   stabilization_type = 'NONE'
@@ -52,7 +52,7 @@
 [Components]
   [./reactor]
     type = Reactor
-    power = 5.1296e7
+    power = 4.6296e7
   [../]
 
   # Pipes and CoreChannels
@@ -66,7 +66,7 @@
     Dh = 2.972e-3
     length = 1
     n_elems = 5
-    f = 0.001
+    f = 0.002
     Hw = 0.0
   [../]
 
@@ -81,8 +81,8 @@
     length = 0.8
     n_elems = 10 #20
 
-    f = 0.022 #Mcadms
-    Hw = 8000 #1.6129e5 #liquid metal
+    f = 0.044 #Mcadms
+    Hw = 9000 #1.6129e5 #liquid metal
     # aw = 1107.8
     Phf = 497.778852000000
 
@@ -109,7 +109,7 @@
     Dh = 2.972e-3
     length = 5.18
     n_elems = 5
-    f = 0.001
+    f = 0.002
     Hw = 0.0
   [../]
 
@@ -123,7 +123,7 @@
     Dh = 2.972e-3
     length = 1
     n_elems = 5
-    f = 0.001
+    f = 0.002
     Hw = 0.0
   [../]
 
@@ -146,7 +146,7 @@
     # aw_secondary = 729
     Phf = 327.568860000000
     Phf_secondary = 327.568860000000
-    f = 0.022
+    f = 0.044
     f_secondary = 0.022
 
     initial_Twall = 628.15
@@ -167,7 +167,7 @@
     Dh = 2.972e-3
     length = 2.27
     n_elems = 5
-    f = 0.001
+    f = 0.002
     Hw = 0.0
   [../]
 
@@ -246,7 +246,7 @@
     Dh = 2.972e-3
     length = 0.3
     n_elems = 5
-    f = 0.001
+    f = 0.002
     Hw = 0.0
   [../]
 
@@ -315,8 +315,8 @@
   l_max_its = 300 # Number of linear iterations for each Krylov solve
 
   start_time = 0.0
-  num_steps = 6000 # 150 for the establishment of long-term natural circulation
-  end_time = 100.
+  num_steps = 3000 # 150 for the establishment of long-term natural circulation
+  end_time = 30
 
 
    [./Quadrature]
